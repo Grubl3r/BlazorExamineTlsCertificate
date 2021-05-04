@@ -1,0 +1,22 @@
+﻿@page "/catch"
+@using System.Diagnostics
+@using Betc.Client.Data
+@inject CertificateCatcher certificateCatcher
+@inject IHttpClientFactory httpClientFactory
+
+<p>
+    Metadata about Google's TLS-certificates is output in the VS Debug output
+</p>
+<button @onclick="CatchCertficate" class="btn btn-primary">
+    Click to catch Tls-certificate
+</button>
+
+@code {
+    public async Task CatchCertficate()
+    {
+        var httpClient = httpClientFactory.CreateClient("certificateCatcherClient");
+        await httpClient.GetAsync("https://www.google.com");
+
+        Debug.Write(certificateCatcher);
+    }
+}
